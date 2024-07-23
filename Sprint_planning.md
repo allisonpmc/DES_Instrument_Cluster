@@ -112,6 +112,11 @@ Day 2 - 4:
 
     2.  Assignee: Kiruthi
 
+Day 4 - 5:
+1. Download Arduino
+	1. Value: 3
+	2. Assignee: All
+
 Daily Internal Meetings
 
 Day 3 - July 24:
