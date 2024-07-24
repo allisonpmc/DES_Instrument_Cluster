@@ -123,8 +123,13 @@ Day 3 - July 24:
 
 1.  What have we done?
 
-    1.  We have ...
+    1.  Allison: Started research on connecting Arduino to Rasberry Pie via can
+    2. Sihun: Research on IPC on CAN network
+    3. Kiruthi: Research on connecting Display
 
 1.  What will we do?
 
-    1.  We will ...
+    1.  Allison: COntinue research
+    2. Sihun: Warmup, continue research, basic arduino code research
+    3. Research MCP2518, continue research on display
+
