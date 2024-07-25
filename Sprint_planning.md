@@ -123,13 +123,26 @@ Day 3 - July 24:
 
 1.  What have we done?
 
-    1.  Allison: Started research on connecting Arduino to Rasberry Pie via can
+    1. Allison: Started research on connecting Arduino to Rasberry Pie via can
     2. Sihun: Research on IPC on CAN network
     3. Kiruthi: Research on connecting Display
 
 1.  What will we do?
 
-    1.  Allison: COntinue research
+    1. Allison: COntinue research
     2. Sihun: Warmup, continue research, basic arduino code research
     3. Research MCP2518, continue research on display
+
+Day 4 - July 25
+
+1. What have we done?
+    1. Allison: Starting research on Arduino-CAN, Rasberry Pi- CAn
+    2. Shubangi: Connection
+    3. Sihun: Tried to check sensor and research ipc and spi
+    4. Kiruthi: CAN filtering, connecting Display, can mask and filters (bitwise operations), reduce payload
+2. What will we do?
+    1. Allison: connect hardware, start psedo code 
+    2. Sihun: presentation of ipc and spi
+    3. Kiruthi: Today bitwise operation can mask and filters 
+    4. Shubangi: Continue working on QT and continue general research 
 
