@@ -31,19 +31,11 @@ Window {
 
     Text {
            id: batteryStatus
-           text: "Battery: " + vehicle.battery + "%"
+           text:  vehicleBattery ? "Battery: " + vehicleBattery.getBatteryVoltage() + "%" : "Battery: N/A"
            anchors.top: parent.top
            anchors.right: parent.right
            anchors.margins: 10  // Optional: adds some padding from the edges
            font.pixelSize: 24   // Set the text size as per your preference
            color: "white"       // Set the text color
        }
-
-    Connections {
-            target: vehicle
-            function onBatterychanged() {
-                batteryStatus.text = "Battery: " + m_battery + "%";
-            }
-        }
-
 }

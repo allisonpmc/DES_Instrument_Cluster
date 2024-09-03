@@ -9,7 +9,7 @@ Speedometer::Speedometer(QQuickItem *parent)
     m_AlignAngle(270),
     m_LowestRange(0),
     m_HighestRange(300),
-    m_Speed(120),
+    m_Speed(0),
     m_ArcWidth(6),
     m_OuterColor(QColor(12, 16, 247)),
     m_InnerColor(QColor(51, 88, 255, 80)),
@@ -71,7 +71,7 @@ void Speedometer::drawMajorTicks(QPainter *painter, const QRectF &rect)
 
     for (int i = 0; i <= 10; ++i)
     {
-        painter->drawLine(rect.width()/2 - 30, 0, rect.width()/2 - 6, 0);
+        painter->drawLine(rect.width()/2 - 25, 0, rect.width()/2 - 6, 0);
         painter->rotate(angleStep);
     }
     painter->translate(width() / 2, height() / 2);
@@ -91,7 +91,7 @@ void Speedometer::drawMinorTicks(QPainter *painter, const QRectF &rect)
     qreal angleStepMin = 270 / minorTicks;
     for(int i = 0; i <= minorTicks+1; ++i)
     {
-        painter->drawLine(rect.width()/2 - 15, 0, rect.width()/2 - 6, 0);
+        painter->drawLine(rect.width()/2 - 20, 0, rect.width()/2 - 6, 0);
         painter->rotate(angleStepMin);
     }
     painter->translate(-width() / 2, -height() / 2);
@@ -105,7 +105,7 @@ void Speedometer::drawNumbers(QPainter *painter, const QRectF &rect)
     pen.setColor(m_OuterColor);
     painter->setPen(pen);
 
-    const int radius = rect.width() / 2 - 45;  // Adjust this based on where you want the numbers to appear
+    const int radius = rect.width() / 2 - 45;  // Determines the position of the numbers
     QFontMetrics fontMat(painter->font());
     QString numbr;
 
@@ -189,8 +189,8 @@ void Speedometer::drawCurrentSpeedArc(QPainter *painter, const QRectF &rect)
     pen.setCapStyle(Qt::FlatCap);
     painter->setPen(pen);
 
-    double startAngle = -135;
-    double spanAngle = -270;
+    int startAngle = -135;
+    int spanAngle = -270;
     qreal valueToAngle = ((m_Speed - m_LowestRange) / (m_HighestRange - m_LowestRange)) * spanAngle;
 
     painter->drawArc(rect.adjusted(m_ArcWidth, m_ArcWidth, -m_ArcWidth, -m_ArcWidth), startAngle * 16, valueToAngle * 16);
@@ -365,3 +365,4 @@ void Speedometer::setBackgroundColor(QColor backgroundColor)
 
     emit backgroundColorChanged();
 }
+

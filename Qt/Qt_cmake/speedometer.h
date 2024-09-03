@@ -23,6 +23,8 @@ class Speedometer : public QQuickPaintedItem
 public:
     Speedometer(QQuickItem *parent = 0);
     virtual void paint(QPainter *painter);
+    Speedometer* ptr_speedometer = new Speedometer();
+    initializeCanBus(ptr_speedometer);
 
     qreal   getSpeedometerSize();
     qreal   getStartAngle();
@@ -89,4 +91,3 @@ private:
 };
 
 #endif // SPEEDOMETER_H
-

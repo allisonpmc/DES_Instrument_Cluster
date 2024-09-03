@@ -1,11 +1,16 @@
-#include "main.h"
+#include "speedometer.h"
+#include "vehicle_battery.h"
+#include <QtGui>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QTimer>
+#include <QWidgetList>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
-
+    Speedometer* ptr_speedometer = new Speedometer();
     qmlRegisterType<Speedometer>("CustomComponents", 1, 0, "Speedometer");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
@@ -37,61 +42,32 @@ int main(int argc, char *argv[])
     }
 
     // Create and connect the vehicle object
-    vehicle vehicle;
-    engine.rootContext()->setContextProperty("vehicle", &vehicle); // Expose the vehicle instance to QML under the name "vehicle"
-    // QObject::connect(&vehicle, &vehicle::speedChanged, ptr_speedometer, &Speedometer::setSpeed);
+    VehicleBattery battery;
+    engine.rootContext()->setContextProperty("vehicleBattery", &battery);
 
     // Example speed change
     // vehicle.changeSpeed(80.5);
-    vehicle.changeBattery(50);
 
     // Example timer for showing speedometer speed change
-    qreal val = 0;
-    QTimer timer1;
-    bool direction;
-    QObject::connect(&timer1, &QTimer::timeout, [&]()
-                     {
-                         if(val >= 300)
-                             direction = false;
-                         else if(val <= 1)
-                             direction = true;
+    // qreal val = 0;
+    // QTimer timer1;
+    // bool direction;
+    // QObject::connect(&timer1, &QTimer::timeout, [&]()
+    //                  {
+    //                      if(val >= 300)
+    //                          direction = false;
+    //                      else if(val <= 1)
+    //                          direction = true;
 
-                         if(direction)
-                             val= val + 10;
-                         else
-                             val = val - 10;
+    //                      if(direction)
+    //                          val= val + 10;
+    //                      else
+    //                          val = val - 10;
 
-                         ptr_speedometer->setSpeed(val);
-                     });
+    //                      ptr_speedometer->setSpeed(val);
+    //                  });
 
-    timer1.start(1000);
-
-    // Example CAN setup
-
-    // QString interfaceName = "can0";  // Your CAN interface name
-
-    // // Create and connect to the CAN bus device
-    // QCanBusDevice *device = QCanBus::instance()->createDevice("socketcan", interfaceName);
-
-    // if (!device) {
-    //     qWarning() << "Failed to create CAN bus device";
-    //     return -1;
-    // }
-
-    // if (!device->connectDevice()) {
-    //     qWarning() << "Failed to connect to CAN bus device";
-    //     delete device;
-    //     return -1;
-    // }
-
-    // QObject::connect(device, &QCanBusDevice::framesReceived, [&]() {
-    //     while (device->framesAvailable()) {
-    //         QCanBusFrame frame = device->readFrame();
-    //         QString canMessage = frame.toString();
-    //         emit ptr_speedometer->setSpeed(canMessage);
-    //     }
-
-    // });
+    // timer1.start(1000);
 
     if (engine.rootObjects().isEmpty())
         return -1;
