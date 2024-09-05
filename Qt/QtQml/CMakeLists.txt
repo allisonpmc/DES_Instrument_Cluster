@@ -22,8 +22,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Circular_guage
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        CAN_Receiver.h
-        # vehicle_battery.h vehicle_battery.cpp
+        CAN_Receiver.h CAN_Receiver.cpp
+        vehicle_battery.h vehicle_battery.cpp
+        Kalman_Filter.h
 
     )
 

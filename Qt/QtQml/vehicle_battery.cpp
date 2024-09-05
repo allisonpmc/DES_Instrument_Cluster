@@ -46,7 +46,7 @@ int VehicleBattery::readRegister() {
     usleep(1000);
 
     // Read the data from the I2C bus
-    char data[1] = {0};
+    char data[2];
     if (read(file, data, 1) != 1) {
         qDebug() << "Failed to read from the I2C bus.";
         return -1;

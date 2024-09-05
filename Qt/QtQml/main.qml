@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 1280
     height: 400
-    title: "Speedometer"
+    title: "Instrument Cluster"
 
     property int maxValue: 240  // Maximum speed value
     property int majorTickInterval: 20  // Interval between major ticks
@@ -15,15 +15,15 @@ ApplicationWindow {
     property color needleColor: "blue"
     property color dialColor: "blue"
     property color backgroundColor: "black"
+    property double speed: 0
 
-    property var vehicleBattery: {
-           return {
-               getBatteryVoltage: function() {
-                   // Replace with actual logic to get battery voltage
-                   return "85"; // Dummy value
-               }
-           };
-       }
+    // property var vehicleBattery: {
+    //        return {
+    //            getBatteryVoltage: function() {
+    //                vehicleBattery ? "Battery: " + vehicleBattery.getBatteryVoltage() + "%" : "Battery: N/A"
+    //            }
+    //        };
+    //    }
 
     Canvas {
         id: speedometer
@@ -112,23 +112,23 @@ ApplicationWindow {
         Component.onCompleted: requestPaint()
     }
 
-    // Slider {
-    //     id: speedSlider
-    //     width: 300
-    //     from: 0
-    //     to: maxValue
-    //     value: currentValue
-    //     anchors.top: speedometer.bottom
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     onValueChanged: {
-    //         currentValue = value;
-    //         speedometer.requestPaint();
-    //     }
-    // }
+    Slider {
+        id: speedSlider
+        width: 300
+        from: 0
+        to: maxValue
+        value: canReceiver.speed
+        anchors.top: speedometer.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        onValueChanged: {
+            canReceiver.speed = value;
+            speedometer.requestPaint();
+        }
+    }
 
     Text {
         id: speedLabel
-        text: "Speed: " + currentValue + " km/h"
+        text:  canReceiver ? "Speed: " + canReceiver.speed + " km/h" : "Speed: N/A"
         color: "blue"
         font.pixelSize: 20
         anchors.top: speedometer.bottom
