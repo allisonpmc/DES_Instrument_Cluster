@@ -11,6 +11,13 @@ VehicleBattery::VehicleBattery(QObject *parent) : QObject(parent), file(-1) {
     }
 }
 
+// Destructor: Cleans up the resources (closes the I2C file descriptor)
+VehicleBattery::~VehicleBattery() {
+    if (file >= 0) {
+        close(file); // Close the I2C device file
+        file = -1;   // Reset file descriptor to indicate it's closed
+    }
+}
 bool VehicleBattery::initI2C() {
     // Open the I2C bus
     if ((file = open(device, O_RDWR)) < 0) {
@@ -28,7 +35,7 @@ bool VehicleBattery::initI2C() {
     return true;
 }
 
-int VehicleBattery::readRegister() {
+float VehicleBattery::readRegister() {
     char buf[2];
     buf[0] = reg;
 
@@ -53,7 +60,7 @@ int VehicleBattery::readRegister() {
     }
     char result[1] = {0};
     result[0] = (data[1] >> 3);
-    return static_cast<int>(result[0] * 4);
+    return static_cast<float>(result[0] * 4);
 }
 /**
  * @Battery Percentage calculation details
