@@ -18,7 +18,7 @@ private:
     int addr = 0x41; // The I2C address of the battery monitoring device
     char reg = 0x02; // The bus voltage register at INA219(battery monitoring device)
     bool initI2C();  // Method to initialize the I2C interface
-    int readRegister(); // Method to read a value from a register
+    float readRegister(); // Method to read a value from a register
 };
 
 #endif // VEHICLE_BATTERY_H
