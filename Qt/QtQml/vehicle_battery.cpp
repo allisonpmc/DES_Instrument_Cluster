@@ -55,15 +55,28 @@ int VehicleBattery::readRegister() {
     result[0] = (data[1] >> 3);
     return static_cast<int>(result[0] * 4);
 }
-
-int VehicleBattery::getBatteryVoltage() {
-    // Assuming the battery voltage is stored in register 0x00
-    int voltage = readRegister();
+/**
+ * @Battery Percentage calculation details
+ *
+ * Full charge voltage is 12.45V
+ * RPi turns off when the bus voltage is 8.4V
+ * Hence the low voltage is set to 9V
+ * 
+ *
+ *
+ * The difference in voltage is 12.4 - 9 = 3.45 
+ * battery_percentage = ((actual voltage - low voltage) / diffVoltage) * 100
+ */
+float VehicleBattery::getBatteryVoltage() {
+    // The battery voltage is stored in register 0x02
+    float voltage = readRegister();
+    float lowVoltage = 9;
+    float diffVoltage = 3.45;
     if (voltage == -1) {
         qDebug() << "Failed to read battery voltage.";
         return -1;
     }
-    int battery_percentage = ((voltage /12.6)*100);
-    qDebug() << battery_percentage;
+    float battery_percentage = (((voltage - lowVoltage) / diffVoltage )*100);
+    qDebug() << battery_percentage << "%";
     return battery_percentage;
 }
