@@ -17,6 +17,18 @@ CanReceiver::CanReceiver(QObject *parent)
     }
 }
 
+CanReceiver::~CanReceiver() 
+{
+    // Clean up and disconnect the CAN bus device
+    if (m_device) {
+        if (m_device->state() == QCanBusDevice::ConnectedState) {
+            m_device->disconnectDevice();
+        }
+        delete m_device;
+        m_device = nullptr;
+    }
+}
+
 double CanReceiver::speed() const {
     return m_speed;
 }
