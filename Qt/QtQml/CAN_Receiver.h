@@ -17,6 +17,7 @@ public:
     CanReceiver(QObject *parent = nullptr);
     double speed() const;
     void setSpeed(double speed);
+    ~CanReceiver();
 
 signals:
     void speedChanged();
