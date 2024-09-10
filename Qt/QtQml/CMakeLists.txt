@@ -30,6 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
 find_package(Qt6 COMPONENTS SerialBus REQUIRED)
 target_link_libraries(Circular_guage PRIVATE Qt6::SerialBus)
+find_package(Qt6 REQUIRED COMPONENTS DBus)
+target_link_libraries(Circular_guage PRIVATE Qt6::DBus)
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Circular_guage APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)

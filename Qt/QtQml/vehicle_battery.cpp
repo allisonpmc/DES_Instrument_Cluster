@@ -18,6 +18,7 @@ VehicleBattery::~VehicleBattery() {
         file = -1;   // Reset file descriptor to indicate it's closed
     }
 }
+
 bool VehicleBattery::initI2C() {
     // Open the I2C bus
     if ((file = open(device, O_RDWR)) < 0) {
@@ -35,7 +36,7 @@ bool VehicleBattery::initI2C() {
     return true;
 }
 
-float VehicleBattery::readRegister() {
+uint16_t VehicleBattery::readRegister() {
     char buf[2];
     buf[0] = reg;
 
@@ -53,37 +54,41 @@ float VehicleBattery::readRegister() {
     usleep(1000);
 
     // Read the data from the I2C bus
-    char data[2];
-    if (read(file, data, 1) != 1) {
+
+    if (read(file, buf, 2) != 2) {
         qDebug() << "Failed to read from the I2C bus.";
         return -1;
     }
-    char result[1] = {0};
-    result[0] = (data[1] >> 3);
-    return static_cast<float>(result[0] * 4);
+
+    uint16_t readValue = (buf[0] << 8) + buf[1];
+    return readValue;
 }
+
 /**
  * @Battery Percentage calculation details
  *
  * Full charge voltage is 12.45V
  * RPi turns off when the bus voltage is 8.4V
  * Hence the low voltage is set to 9V
- * 
  *
  *
- * The difference in voltage is 12.4 - 9 = 3.45 
+ *
+ * The difference in voltage is 12.4 - 9 = 3.45
  * battery_percentage = ((actual voltage - low voltage) / diffVoltage) * 100
  */
-float VehicleBattery::getBatteryVoltage() {
+
+int VehicleBattery::getBatteryVoltage() {
     // The battery voltage is stored in register 0x02
-    float voltage = readRegister();
+    uint16_t voltageRaw = readRegister();
+    float voltage = ((voltageRaw>>3)*4.0)/1000;
+    qDebug() << "Battery Voltage: " << voltage;
     float lowVoltage = 9;
     float diffVoltage = 3.45;
     if (voltage == -1) {
         qDebug() << "Failed to read battery voltage.";
         return -1;
     }
-    float battery_percentage = (((voltage - lowVoltage) / diffVoltage )*100);
+    int battery_percentage = (((voltage - lowVoltage) / diffVoltage )*100);
     qDebug() << battery_percentage << "%";
     return battery_percentage;
 }

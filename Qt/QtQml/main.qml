@@ -17,19 +17,12 @@ ApplicationWindow {
     property color backgroundColor: "black"
     property double speed: 0
 
-    // property var vehicleBattery: {
-    //        return {
-    //            getBatteryVoltage: function() {
-    //                vehicleBattery ? "Battery: " + vehicleBattery.getBatteryVoltage() + "%" : "Battery: N/A"
-    //            }
-    //        };
-    //    }
-
     Canvas {
         id: speedometer
         width: 300
         height: 300
-        anchors.centerIn: parent
+        anchors.top: parent.top  // Position the speedometer at the top of the window
+        anchors.horizontalCenter: parent.horizontalCenter  // Center the speedometer horizontally
 
         onPaint: {
             var ctx = getContext("2d");
@@ -70,7 +63,7 @@ ApplicationWindow {
                     // Draw the speed number for major ticks
                     var speedValue = (i / (minorTickCount + 1)) * majorTickInterval;
                     ctx.fillStyle = "white";
-                    ctx.font = "bold 12px Arial";
+                    ctx.font = "bold 12px sans-serif";
                     var textX = centerX + (radius - 30) * Math.cos(angle);
                     var textY = centerY + (radius - 30) * Math.sin(angle);
                     ctx.fillText(speedValue.toString(), textX - 10, textY + 5);
@@ -85,7 +78,7 @@ ApplicationWindow {
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
-                ctx.strokeStyle = "blue";
+                ctx.strokeStyle = "gray";
                 ctx.stroke();
             }
 
@@ -112,19 +105,26 @@ ApplicationWindow {
         Component.onCompleted: requestPaint()
     }
 
-    Slider {
-        id: speedSlider
-        width: 300
-        from: 0
-        to: maxValue
-        value: canReceiver.speed
-        anchors.top: speedometer.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        onValueChanged: {
-            canReceiver.speed = value;
-            speedometer.requestPaint();
+    Connections {
+            target: canReceiver
+            function onSpeedChanged(speed) {
+                speedometer.requestPaint();
+            }
         }
-    }
+
+    // Slider {
+    //     id: speedSlider
+    //     width: 300
+    //     from: 0
+    //     to: maxValue
+    //     value: canReceiver.speed
+    //     anchors.top: speedometer.bottom
+    //     anchors.horizontalCenter: parent.horizontalCenter
+    //     onValueChanged: {
+    //         canReceiver.speed = value;
+    //         speedometer.requestPaint();
+    //     }
+    // }
 
     Text {
         id: speedLabel
@@ -132,6 +132,7 @@ ApplicationWindow {
         color: "blue"
         font.pixelSize: 20
         anchors.top: speedometer.bottom
+        anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
     }
 

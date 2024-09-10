@@ -8,6 +8,9 @@
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
+#include <QElapsedTimer>
+#include <QtEndian>
+#include <QVariant>
 
 class CanReceiver : public QObject {
     Q_OBJECT
@@ -15,9 +18,10 @@ class CanReceiver : public QObject {
 
 public:
     CanReceiver(QObject *parent = nullptr);
+    ~CanReceiver();
     double speed() const;
     void setSpeed(double speed);
-    ~CanReceiver();
+    void handleError(QCanBusDevice::CanBusError error);
 
 signals:
     void speedChanged();
