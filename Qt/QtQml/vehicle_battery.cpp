@@ -51,10 +51,9 @@ uint16_t VehicleBattery::readRegister() {
         qDebug() << "Error still exists";
         return -1;
     }
-    usleep(1000);
+    usleep(1000); // Time delay to read back from I2C
 
     // Read the data from the I2C bus
-
     if (read(file, buf, 2) != 2) {
         qDebug() << "Failed to read from the I2C bus.";
         return -1;

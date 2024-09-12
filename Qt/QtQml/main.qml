@@ -4,8 +4,11 @@ import QtQuick.Window 2.15
 
 ApplicationWindow {
     visible: true
-    width: 1280
-    height: 400
+    // width: 1280 // use instead of full screen display
+    // height: 400 // use instead of full screen display
+    width: Screen.width
+    height: Screen.height
+    visibility: Window.FullScreen
     title: "Instrument Cluster"
 
     property int maxValue: 240  // Maximum speed value
@@ -112,20 +115,6 @@ ApplicationWindow {
             }
         }
 
-    // Slider {
-    //     id: speedSlider
-    //     width: 300
-    //     from: 0
-    //     to: maxValue
-    //     value: canReceiver.speed
-    //     anchors.top: speedometer.bottom
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     onValueChanged: {
-    //         canReceiver.speed = value;
-    //         speedometer.requestPaint();
-    //     }
-    // }
-
     Text {
         id: speedLabel
         text:  canReceiver ? "Speed: " + canReceiver.speed + " km/h" : "Speed: N/A"
@@ -136,13 +125,37 @@ ApplicationWindow {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Text {
-              id: batteryStatus
-              text:  vehicleBattery ? "Battery: " + vehicleBattery.getBatteryVoltage() + "%" : "Battery: N/A"
-              anchors.top: parent.top
-              anchors.right: parent.right
-              anchors.margins: 10  // Optional: adds some padding from the edges
-              font.pixelSize: 24   // Set the text size as per your preference
-              color: "Blue"       // Set the text color
-          }
+    Rectangle {
+            id: batteryContainer
+            width: 80
+            height: 40
+            color: "white"
+            border.color: "black"
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: 10
+
+            Rectangle {
+                id: batteryFill
+                width: (vehicleBattery ? vehicleBattery.getBatteryVoltage() / 100 * batteryContainer.width : 0)
+                height: parent.height
+                color: vehicleBattery.getBatteryVoltage() > 20 ? "green" : "red"
+            }
+
+            Rectangle {
+                width: 8
+                height: parent.height / 3
+                color: "black"
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                text: vehicleBattery ? vehicleBattery.getBatteryVoltage() + "%" : "N/A"
+                color: "black"
+                font.pixelSize: 18
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+    }
 }
