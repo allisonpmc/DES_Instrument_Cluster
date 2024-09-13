@@ -1,14 +1,14 @@
 # DES02_Instrument_Cluster
 
 ## Table of Contents
-- Introduction
-- Project Overview
-- Project Goals and Objectives
-- Installation and Setup
-- Hardware Components
-- System Architecture
-- Docker
-- Results
+- [Introduction]
+- [Project Overview]
+- [Project Goals and Objectives]
+- [Installation and Setup]
+- [Hardware Components]
+- [System Architecture]
+- [Docker]
+- [Results]
 
 ## Introduction
 The document includes the system architecture, hardware components, Qt Framework and GUI details of the Instrument cluster.
@@ -32,7 +32,7 @@ BONUS Part:
 
 ## Raspberry Pi Setup
 
-- 2-CH CAN Shield
+### 2-CH CAN Shield
 
 **Dependencies**
 
@@ -90,7 +90,7 @@ sudo ifconfig can0 txqueuelen 65536
     candump can0
     ```
 
-- Touch Screen Display
+### Touch Screen Display
 
 **Physical Interface Instructions**
 
@@ -110,17 +110,21 @@ dtoverlay=vc4-kms-dsi-waveshare-panel,7_9_inch
 # Hardware Components
 
 ## PiRacer Car
-- Pi Racer
+
+Pi Racer
     - [Pi-Racer Wiki](https://www.waveshare.com/piracer-ai-kit.htm)
 
-- Arduino UNO with Speed Sensor
+## Arduino UNO with Speed Sensor
+
 Arduino UNO is a microcontroller board based on the ATmega328P. It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 6 analog inputs, a 16 MHz ceramic resonator, a USB connection, a power jack, an ICSP header and a reset button. IR Speed Sensor is used to send the rpm data to Arduino.
 
-- CAN-BUS Shield V2.0 (seeed studio)
+## CAN-BUS Shield V2.0 (seeed studio)
+
 Since Arduino has no in-built CAN interfaces, external CAN-BUS Shield is used. The CAN-BUS shield communicate via Arduino's SPI Interface to collect the speed data.
     -[CAN-BUS SHIELD Schematic](https://docs.rs-online.com/d7d8/A700000007766014.pdf)
 
-- Raspberry Pi 4 Model B 
+## Raspberry Pi 4 Model B 
+
 Raspberry Pi 4 Model B features a high-performance 64-bit quad-core processor,
 dual-display support at resolutions up to 4K via a pair of micro HDMI ports, hardware
 video decode at up to 4Kp60, up to 8GB of RAM, dual-band 2.4/5.0 GHz wireless LAN,
@@ -129,22 +133,35 @@ add-on).
 The Qt Application runs in the RaspberryPi.
     -[RaspberryPi4B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/specifications/)
 
-- CAN-BUS (FD) HAT for Raspberry Pi (seeed studio)
+## CAN-BUS (FD) HAT for Raspberry Pi (seeed studio)
+
 Similar to Arduino, RPi 4 also has no in-built CAN Interface. The 2-Channel CAN-BUS(FD) Shield for the Raspberry Pi is based on an MCP2518 CAN FD controller and the MCP2557 CAN FD transceiver, which communicates with the Raspberry Pi via high-speed SPI. It allows to receive data from the Arduino.
     -[CAN-BUS HAT](https://wiki.seeedstudio.com/2-Channel-CAN-BUS-FD-Shield-for-Raspberry-Pi/#install-can-hat)
 
-- Touch Screen Display
+## Touch Screen Display
+
 It is the display connected with RPi inorder to represent the GUI.
     -[7.9inch DSI LCD, 400*1280](https://www.waveshare.com/wiki/7.9inch_DSI_LCD)
+
 
 # System Architecture
 
 ## Hardware Architecture
 
-
+<img src=https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/images/Hardware_Architecture.png style="width:600px;">
 
 ## System Architecture
 
+<img src=https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/images/System_Architecture.png style="width:600px;">
+
+# Docker
+
+Docker is a software platform that allows you to build, test, and deploy applications quickly. Docker packages software into standardized units called containers that have everything the software needs to run including libraries, system tools, code, and runtime. Using Docker, one can quickly deploy and scale applications into any environment and know that the code will run.
+
+The project specific docker container creation is explained in the below link.
+ -[Docker](https://github.com/tweetyboo/DES---Instrument_Cluster/tree/main/Docker)
+
+# Results
 
 
 
