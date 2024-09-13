@@ -162,7 +162,14 @@ The project specific docker container creation is explained in the below link.
  -[Docker](https://github.com/tweetyboo/DES---Instrument_Cluster/tree/main/Docker)
 
 # Results
+Based on the project objectives, we successfully achieved the following outcomes:
 
+- Implemented, tested and validated a Qt-based graphical user interface (GUI) for the instrument cluster using PiRacer.
+- Integrated an Arduino-based sensor system with the Raspberry Pi instrument cluster using the CAN bus protocol.
+- Displayed real-time speed data on the instrument cluster GUI by interfacing the speed sensor system with PiRacer.
+- The Qt GUI provided a polished and responsive interface for displaying the real-time speedometer.
+- CAN bus integration allowed reliable speed data transfer from the speed sensors.
+- The end-to-end system achieved the goal of building a functional real-time speedometer display using PiRacer and Arduino. The testing results as presented validated the accuracy and reliability of the system.
 
 
 
