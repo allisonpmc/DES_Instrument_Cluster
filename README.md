@@ -1,7 +1,7 @@
 # DES02_Instrument_Cluster
 
 ## Table of Contents
-- [Introduction]
+- [Introduction](## Introduction)
 - [Project Overview]
 - [Project Goals and Objectives]
 - [Installation and Setup]
