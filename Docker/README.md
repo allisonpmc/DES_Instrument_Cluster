@@ -126,6 +126,7 @@ team1@raspberrypi:~ sudo tar -xvf qt-pi-binaries.tar.gz -C /usr/local/qt6
 team1@raspberrypi:~ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qt6/lib/
 seame:scp HelloQt6 team1@192.168.86.77:/home/team1/
 ```
+Make sure to change the pi name and ip address of yours while running scp statement.
 
 To execute the program on RPi, run the following command in RPi.
 ```
