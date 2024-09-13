@@ -1,14 +1,14 @@
 # DES02_Instrument_Cluster
 
 ## Table of Contents
-- [Introduction](## Introduction)
-- [Project Overview]
-- [Project Goals and Objectives]
-- [Installation and Setup]
-- [Hardware Components]
-- [System Architecture]
-- [Docker]
-- [Results]
+- [Introduction](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#introduction)
+- [Project Overview](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#project-overview)
+- [Project Goals and Objectives](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#project-goals-and-objectives)
+- [Installation and Setup](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#installtion-and-setup)
+- [Hardware Components](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#hardware-components)
+- [System Architecture](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#system-architecture)
+- [Docker](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#docker)
+- [Results](https://github.com/tweetyboo/DES---Instrument_Cluster/blob/main/README.md#results)
 
 ## Introduction
 The document includes the system architecture, hardware components, Qt Framework and GUI details of the Instrument cluster.
