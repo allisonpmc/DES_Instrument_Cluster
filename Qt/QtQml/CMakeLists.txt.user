@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 13.0.2, 2024-09-05T16:38:19. -->
+<!-- Written by QtCreator 13.0.2, 2024-09-13T16:58:13. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -393,9 +393,9 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph dwarf,4096 -F 250</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Circular_guage</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Circular_guage</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Circular_guage</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Instrument_Cluster</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.Instrument_Cluster</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">Instrument_Cluster</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

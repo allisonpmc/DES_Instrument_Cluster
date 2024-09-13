@@ -1,6 +1,10 @@
 #include "CAN_Receiver.h"
 #include "Kalman_Filter.h"
 
+// Initialization for Kalman filter and timers
+KalmanFilter kalmanFilter(0.07, 3.0, 0.1, 0.0);
+QElapsedTimer timer1;
+
 CanReceiver::CanReceiver(QObject *parent)
     : QObject(parent), m_speed(0.0) // Initialize speed to 0.0
 {
@@ -53,22 +57,14 @@ void CanReceiver::setSpeed(double speed) {
     }
 }
 
-// Kalman filter initialization
-KalmanFilter kalmanFilter(0.1, 0.1, 0.1, 0.0);
-
-// Initialize timer for time delta calculations
-QElapsedTimer timer1;
-
 void CanReceiver::processFrames() {
     // Ensure that CAN device is connected before processing frames
     if (m_device->state() != QCanBusDevice::ConnectedState) {
         qWarning() << "Cannot process frames. CAN bus device is not connected.";
         return;
     }
-
     while (m_device->framesAvailable()) {
         QCanBusFrame frame = m_device->readFrame();
-
         if (frame.isValid()) {
             // Process the frame to extract speed
             if (frame.frameId() == 0x100) { // Check for the correct frame ID
@@ -76,17 +72,14 @@ void CanReceiver::processFrames() {
                     try {
                         qint64 elapsed = timer1.restart();
                         double dt = elapsed / 1000.0; // Convert to seconds
-
-                        // Extract speed from payload (assuming little-endian double)
+                        // Extract speed from payload (assuming little-endian float)
                         QByteArray payload = frame.payload();
                         float speed = qFromLittleEndian<float>(reinterpret_cast<const uchar*>(payload.constData()));
-                        qDebug() << "Received_Speed: " << speed;
-
-                        // Apply Kalman filter
-                        double filtered_Speed = kalmanFilter.update(speed, dt);
-                        setSpeed(filtered_Speed); // Update the speed
-                        qDebug() << "Received Speed: " << speed << "Filtered Speed: " << filtered_Speed;
-
+                        qDebug() << "Received Speed: " << speed;
+                            // Apply Kalman filter after stabilization period
+                            double filtered_Speed = kalmanFilter.update(speed, dt);
+                            setSpeed(filtered_Speed); // Update the speed
+                            qDebug() << "Filtered Speed: " << filtered_Speed;
                     } catch (const std::exception &e) {
                         qWarning() << "Exception occurred while processing CAN frame: " << e.what();
                     }

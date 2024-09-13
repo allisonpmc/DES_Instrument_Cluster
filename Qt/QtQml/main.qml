@@ -10,6 +10,7 @@ ApplicationWindow {
     height: Screen.height
     visibility: Window.FullScreen
     title: "Instrument Cluster"
+    color: "black"
 
     property int maxValue: 240  // Maximum speed value
     property int majorTickInterval: 20  // Interval between major ticks
@@ -19,6 +20,7 @@ ApplicationWindow {
     property color dialColor: "blue"
     property color backgroundColor: "black"
     property double speed: 0
+
 
     Canvas {
         id: speedometer
@@ -108,6 +110,18 @@ ApplicationWindow {
         Component.onCompleted: requestPaint()
     }
 
+    NumberAnimation {
+        id: needleAnimation
+        target: speedometer
+        property: "speed"
+        from: 0
+        to: maxValue
+        duration: 1000  // Faster movement
+        easing.type: Easing.InOutQuad
+        running: true  // Automatically start the animation
+        onStopped: speedometer.requestPaint()  // Request paint after animation stops
+    }
+
     Connections {
             target: canReceiver
             function onSpeedChanged(speed) {
@@ -117,7 +131,7 @@ ApplicationWindow {
 
     Text {
         id: speedLabel
-        text:  canReceiver ? "Speed: " + canReceiver.speed + " km/h" : "Speed: N/A"
+        text:  canReceiver ? "Speed: " + Math.round(canReceiver.speed)+ " cm/s" : "Speed: N/A"
         color: "blue"
         font.pixelSize: 20
         anchors.top: speedometer.bottom
@@ -126,36 +140,45 @@ ApplicationWindow {
     }
 
     Rectangle {
-            id: batteryContainer
-            width: 80
-            height: 40
-            color: "white"
-            border.color: "black"
-            anchors.top: parent.top
+        id: batteryContainer
+        width: 80
+        height: 40
+        color: "white"
+        border.color: "black"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 10
+
+        Rectangle {
+            id: batteryFill
+            width: (vehicleBattery ? vehicleBattery.getBatteryVoltage() / 100 * batteryContainer.width : 0)
+            height: parent.height
+            color: vehicleBattery.getBatteryVoltage() > 20 ? "green" : "red"
+        }
+
+        Rectangle {
+            width: 8
+            height: parent.height / 3
+            color: "black"
             anchors.right: parent.right
-            anchors.margins: 10
+            anchors.verticalCenter: parent.verticalCenter
+        }
 
-            Rectangle {
-                id: batteryFill
-                width: (vehicleBattery ? vehicleBattery.getBatteryVoltage() / 100 * batteryContainer.width : 0)
-                height: parent.height
-                color: vehicleBattery.getBatteryVoltage() > 20 ? "green" : "red"
-            }
-
-            Rectangle {
-                width: 8
-                height: parent.height / 3
-                color: "black"
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Text {
-                text: vehicleBattery ? vehicleBattery.getBatteryVoltage() + "%" : "N/A"
-                color: "black"
-                font.pixelSize: 18
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
+        Text {
+            text: vehicleBattery ? vehicleBattery.getBatteryVoltage() + "%" : "N/A"
+            color: "black"
+            font.pixelSize: 18
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
+
+    Connections {
+            target: vehicleBattery
+            function getBatteryVoltage() {
+                if (vehicleBattery) {
+                    batteryContainer.forceLayout();
+                }
+            }
+        }
 }

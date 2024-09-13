@@ -53,6 +53,13 @@ public:
         if(X[0][0] < 0){
             X[0][0] = 0;
         }
+
+        // Settling logic: If speed is very low, force it to zero faster
+        if (X[0][0] < 1e-2) {
+            X[0][0] = 0;  // Settling to zero
+            X[1][0] = 0;  // Stop velocity change
+        }
+
         return X[0][0];
     }
 
